@@ -76,8 +76,8 @@ const listUrls = [
   'https://shopvnb.com/vot-cau-long-tenway.html',
 ];
 
-// (async () => {
-//   await Promise.all(listUrls.map(url => getProducts(url)));
-// })();
-
-getProducts('https://shopvnb.com/giay-cau-long-yonex.html');
+for (let i = 1; i < listUrls.length; i++) {
+  setTimeout(() => {
+    getProducts(listUrls[i]);
+  }, i * 10000);
+}
