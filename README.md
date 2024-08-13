@@ -1,2 +1,1 @@
 # getProducts-Tool
-# getProducts-Tool
