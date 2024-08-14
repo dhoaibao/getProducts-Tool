@@ -1,24 +1,13 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const { get } = require('http');
+const cliProgress = require('cli-progress');
+const axios = require('axios');
 
-async function getProducts(url) {
-  let browser;
+async function getProducts(page, url) {
   try {
-    // Khởi động trình duyệt
-    browser = await puppeteer.launch({ 
-      headless: true, // Chạy ở chế độ headless để tăng tốc độ
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
-
-    // Điều hướng đến trang web mục tiêu với timeout tăng lên 60 giây
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.waitForSelector('.item_product_main', { timeout: 30000 });
 
-    // Đợi các phần tử sản phẩm xuất hiện với timeout tăng lên 60 giây
-    await page.waitForSelector('.item_product_main', { timeout: 60000 });
-
-    // Lấy dữ liệu sản phẩm
     const products = await page.evaluate(() => {
       const productElements = document.querySelectorAll('.item_product_main');
       const title = document.querySelector('.title-page')?.innerText || 'No product type';
@@ -37,30 +26,9 @@ async function getProducts(url) {
       return productData;
     });
 
-    // Đọc nội dung hiện tại của tệp JSON
-    let existingData = [];
-    const filePath = './src/result/products.json';
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      if (fileContent.trim()) {
-        existingData = JSON.parse(fileContent);
-      }
-    }
-
-    // Thêm dữ liệu mới vào nội dung hiện tại
-    existingData.push(...products);
-
-    // Ghi lại toàn bộ nội dung vào tệp JSON
-    const jsonData = JSON.stringify(existingData, null, 2);
-    fs.writeFileSync(filePath, jsonData, 'utf-8');
-
+    return products;
   } catch (error) {
-    console.error(`Error scraping ${url}:`, error);
-  } finally {
-    // Đóng trình duyệt
-    if (browser) {
-      await browser.close();
-    }
+    return []; // Return an empty array if there was an error
   }
 }
 
@@ -74,10 +42,91 @@ const listUrls = [
   'https://shopvnb.com/vot-cau-long-proace.html',
   'https://shopvnb.com/vot-cau-long-flypower.html',
   'https://shopvnb.com/vot-cau-long-tenway.html',
+
+  'https://shopvnb.com/giay-cau-long-yonex.html',
+  'https://shopvnb.com/giay-cau-long-victor.html',
+  'https://shopvnb.com/giay-cau-long-lining.html',
+  'https://shopvnb.com/giay-cau-long-kawasaki-nam.html',
+  'https://shopvnb.com/giay-cau-long-mizuno.html',
+  'https://shopvnb.com/giay-cau-long-kumpoo1.html',
+  'https://shopvnb.com/giay-cau-long-promax.html',
+  'https://shopvnb.com/giay-cau-long-babolat.html',
+  'https://shopvnb.com/giay-cau-long-sunbatta.html',
+  'https://shopvnb.com/giay-cau-long-apacs.html',
 ];
 
-for (let i = 1; i < listUrls.length; i++) {
-  setTimeout(() => {
-    getProducts(listUrls[i]);
-  }, i * 10000);
+async function urlExists(url) {
+  try {
+    await axios.head(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
+
+async function processUrls(listUrls) {
+  const numPages = 3;
+  const totalTasks = listUrls.length * numPages;
+  const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+  progressBar.start(totalTasks, 0);
+
+  let totalProducts = [];
+  const errorLog = [];
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
+  const pages = await Promise.all(Array(5).fill(null).map(() => browser.newPage())); // Open 5 pages
+
+  const tasks = listUrls.flatMap(baseUrl =>
+    Array.from({ length: numPages }, (_, j) => ({
+      url: j === 1 ? baseUrl : `${baseUrl}?page=${j + 1}`,
+    }))
+  );
+
+  const chunkSize = Math.ceil(tasks.length / pages.length);
+  const taskChunks = Array.from({ length: pages.length }, (_, i) =>
+    tasks.slice(i * chunkSize, (i + 1) * chunkSize)
+  );
+
+  await Promise.all(taskChunks.map(async (taskChunk, index) => {
+    const page = pages[index];
+    for (const task of taskChunk) {
+      const { url } = task;
+      if (await urlExists(url)) {
+        try {
+          const products = await getProducts(page, url);
+          totalProducts.push(...products);
+        } catch (error) {
+          errorLog.push(`Error scraping ${url}: ${error.message}`);
+        }
+      } else {
+        errorLog.push(`URL does not exist: ${url}`);
+      }
+      progressBar.increment();
+    }
+  }));
+
+  await browser.close();
+  progressBar.stop();
+
+  // Write products data to JSON file
+  const filePath = './src/result/products.json';
+  const jsonData = JSON.stringify(totalProducts, null, 2);
+  fs.writeFileSync(filePath, jsonData, 'utf-8');
+
+  // Write errors to log file
+  if (errorLog.length > 0) {
+    const logFilePath = './src/result/error.log';
+    fs.writeFileSync(logFilePath, errorLog.join('\n'), 'utf-8');
+    console.log('Errors were logged to error.log');
+  }
+
+  console.log(`Done!\nTotal number of products: ${totalProducts.length}`);
+}
+
+// Example usage
+console.log('Start scraping products...');
+processUrls(listUrls);
