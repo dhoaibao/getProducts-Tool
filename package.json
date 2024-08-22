@@ -8,9 +8,10 @@
     "fs": "^0.0.1-security",
     "gitignore": "^0.7.0",
     "p-limit": "^6.1.0",
-    "puppeteer": "^23.0.2"
+    "puppeteer": "^23.0.2",
+    "puppeteer-firefox": "^0.5.1"
   },
   "scripts": {
-    "start": "node ./src/getProducts.js"
+    "start": "node ./src/getProducts.js && node ./src/getProductDetail.js"
   }
 }

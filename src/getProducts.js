@@ -10,17 +10,20 @@ async function getProducts(page, url) {
 
     const products = await page.evaluate(() => {
       const productElements = document.querySelectorAll('.item_product_main');
-      const title = document.querySelector('.title-page')?.innerText || 'No product type';
+      const title = document.querySelector('.title-page')?.innerText;
       let part = title.split(' ');
-      const branch = part[part.length - 1].toLowerCase();
-      const productType = part.slice(0, part.length - 1).join(' ').toLowerCase();
+      const productBranch = part[part.length - 1].toLowerCase();
+      const productType = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+      const countInStock = 50;
       const productData = [];
 
       productElements.forEach(product => {
-        const name = product.querySelector('.product-name')?.innerText || 'No name';
-        const price = product.querySelector('.price-box')?.innerText || 'No price';
-        const imgUrl = product.querySelector('.lazyload.loaded')?.getAttribute('src') || 'No image URL';
-        productData.push({ name, price, productType, branch, imgUrl });
+        const productName = product.querySelector('.product-name')?.innerText;
+        const link ="https://shopvnb.com/".concat(product.querySelector('.product-name a')?.getAttribute('href'));
+        const priceText = product.querySelector('.price-box')?.innerText;
+        const productImagePath = product.querySelector('.lazyload.loaded')?.getAttribute('src');
+        const price = parseInt(priceText.replace(/\./g, '').replace(' ₫', ''), 10);
+        productData.push({ productName, price, productType, productBranch, productImagePath, countInStock, link});
       });
 
       return productData;
@@ -34,25 +37,25 @@ async function getProducts(page, url) {
 
 const listUrls = [
   'https://shopvnb.com/vot-cau-long-yonex.html',
-  'https://shopvnb.com/vot-cau-long-victor.html',
-  'https://shopvnb.com/vot-cau-long-lining.html',
-  'https://shopvnb.com/vot-cau-long-mizuno.html',
-  'https://shopvnb.com/vot-cau-long-apacs.html',
-  'https://shopvnb.com/vot-cau-long-vnb.html',
-  'https://shopvnb.com/vot-cau-long-proace.html',
-  'https://shopvnb.com/vot-cau-long-flypower.html',
-  'https://shopvnb.com/vot-cau-long-tenway.html',
+  // 'https://shopvnb.com/vot-cau-long-victor.html',
+  // 'https://shopvnb.com/vot-cau-long-lining.html',
+  // 'https://shopvnb.com/vot-cau-long-mizuno.html',
+  // 'https://shopvnb.com/vot-cau-long-apacs.html',
+  // 'https://shopvnb.com/vot-cau-long-vnb.html',
+  // 'https://shopvnb.com/vot-cau-long-proace.html',
+  // 'https://shopvnb.com/vot-cau-long-flypower.html',
+  // 'https://shopvnb.com/vot-cau-long-tenway.html',
 
-  'https://shopvnb.com/giay-cau-long-yonex.html',
-  'https://shopvnb.com/giay-cau-long-victor.html',
-  'https://shopvnb.com/giay-cau-long-lining.html',
-  'https://shopvnb.com/giay-cau-long-kawasaki-nam.html',
-  'https://shopvnb.com/giay-cau-long-mizuno.html',
-  'https://shopvnb.com/giay-cau-long-kumpoo1.html',
-  'https://shopvnb.com/giay-cau-long-promax.html',
-  'https://shopvnb.com/giay-cau-long-babolat.html',
-  'https://shopvnb.com/giay-cau-long-sunbatta.html',
-  'https://shopvnb.com/giay-cau-long-apacs.html',
+  // 'https://shopvnb.com/giay-cau-long-yonex.html',
+  // 'https://shopvnb.com/giay-cau-long-victor.html',
+  // 'https://shopvnb.com/giay-cau-long-lining.html',
+  // 'https://shopvnb.com/giay-cau-long-kawasaki-nam.html',
+  // 'https://shopvnb.com/giay-cau-long-mizuno.html',
+  // 'https://shopvnb.com/giay-cau-long-kumpoo1.html',
+  // 'https://shopvnb.com/giay-cau-long-promax.html',
+  // 'https://shopvnb.com/giay-cau-long-babolat.html',
+  // 'https://shopvnb.com/giay-cau-long-sunbatta.html',
+  // 'https://shopvnb.com/giay-cau-long-apacs.html',
 ];
 
 async function urlExists(url) {
@@ -65,7 +68,7 @@ async function urlExists(url) {
 }
 
 async function processUrls(listUrls) {
-  const numPages = 3;
+  const numPages = 1;
   const totalTasks = listUrls.length * numPages;
   const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   progressBar.start(totalTasks, 0);
