@@ -7,11 +7,11 @@
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "gitignore": "^0.7.0",
+    "mongodb": "^6.8.0",
     "p-limit": "^6.1.0",
-    "puppeteer": "^23.0.2",
-    "puppeteer-firefox": "^0.5.1"
+    "puppeteer": "^23.0.2"
   },
   "scripts": {
-    "start": "node ./src/getProducts.js && node ./src/getProductDetail.js"
+    "start": "node ./src/getProducts.js  && node ./src/getProductDetail.js"
   }
 }

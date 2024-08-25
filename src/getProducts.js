@@ -1,32 +1,36 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cliProgress = require('cli-progress');
-const axios = require('axios');
+const axios = require('axios');z
 
 async function getProducts(page, url) {
   try {
-    // await page.setRequestInterception(true);
-    //     page.on('request', (request) => {
-    //         if (request.isInterceptResolutionHandled()) {
-    //             return;
-    //         }
-    //         if (['image', 'stylesheet'].includes(request.resourceType())) {
-    //             request.abort();
-    //         } else {
-    //             request.continue();
-    //         }
-    //     });
-
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
     await page.waitForSelector('.item_product_main', { timeout: 60000 });
 
     const products = await page.evaluate(() => {
+      function replaceID(name) {
+        name = name.replace('\t', '');
+        if (name.search('Yonex')) return '66cac8b7ef5ace8edb5cff68';
+        if (name.search('Lining')) return '66cac89bef5ace8edb5cff63';
+        if (name.search('Kumpoo')) return '66c813b5c9e37580eac489f5';
+        if (name.search('Victor')) return '66cac8c6ef5ace8edb5cff6b';
+        if (name.search('Mizuno')) return '66cac8d6ef5ace8edb5cff6e';
+        if (name.search('Apacs')) return '66cac8e3ef5ace8edb5cff71';
+        if (name.search('VNB')) return '66cac8f2ef5ace8edb5cff74';
+        if (name.search('Proace')) return '66cac904ef5ace8edb5cff77';
+        if (name.search('Forza')) return '66cac91bef5ace8edb5cff7a';
+        if (name.search('FlyPower')) return '66cac93cef5ace8edb5cff7d';
+        if (name.search('Tenway')) return '66cac953ef5ace8edb5cff80';
+      }
+
       const productElements = document.querySelectorAll('.item_product_main');
       const title = document.querySelector('.title-page')?.innerText;
       let part = title.split(' ');
       const lastPart = part[part.length - 1].toLowerCase();
-      const productBranch = lastPart.charAt(0).toUpperCase() + lastPart.slice(1);
-      const productType = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+      const productBranch = replaceID(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
+      // const productType = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+      const productType = "66caca6cef5ace8edb5cff8b";
       const countInStock = 50;
       const productData = [];
 
@@ -50,14 +54,14 @@ async function getProducts(page, url) {
 
 const listUrls = [
   'https://shopvnb.com/vot-cau-long-yonex.html',
-  'https://shopvnb.com/vot-cau-long-victor.html',
-  'https://shopvnb.com/vot-cau-long-lining.html',
-  'https://shopvnb.com/vot-cau-long-mizuno.html',
-  'https://shopvnb.com/vot-cau-long-apacs.html',
-  'https://shopvnb.com/vot-cau-long-vnb.html',
-  'https://shopvnb.com/vot-cau-long-proace.html',
-  'https://shopvnb.com/vot-cau-long-flypower.html',
-  'https://shopvnb.com/vot-cau-long-tenway.html',
+  // 'https://shopvnb.com/vot-cau-long-victor.html',
+  // 'https://shopvnb.com/vot-cau-long-lining.html',
+  // 'https://shopvnb.com/vot-cau-long-mizuno.html',
+  // 'https://shopvnb.com/vot-cau-long-apacs.html',
+  // 'https://shopvnb.com/vot-cau-long-vnb.html',
+  // 'https://shopvnb.com/vot-cau-long-proace.html',
+  // 'https://shopvnb.com/vot-cau-long-flypower.html',
+  // 'https://shopvnb.com/vot-cau-long-tenway.html',
 ];
 
 async function urlExists(url) {
