@@ -5,7 +5,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -63,7 +63,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -121,7 +121,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -177,7 +177,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -233,7 +233,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -288,7 +288,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -355,7 +355,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -405,7 +405,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -467,7 +467,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -525,7 +525,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -582,7 +582,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -640,7 +640,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -709,7 +709,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -778,7 +778,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -847,7 +847,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -911,7 +911,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -975,7 +975,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1039,7 +1039,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1105,7 +1105,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1173,7 +1173,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1240,7 +1240,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1305,7 +1305,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1378,7 +1378,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1454,7 +1454,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1528,7 +1528,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1601,7 +1601,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1672,7 +1672,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1744,7 +1744,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1803,7 +1803,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1864,7 +1864,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1924,7 +1924,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -1983,7 +1983,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2042,7 +2042,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2114,7 +2114,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2185,7 +2185,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2257,7 +2257,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2329,7 +2329,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2400,7 +2400,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2465,7 +2465,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2523,7 +2523,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2591,7 +2591,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2646,7 +2646,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2713,7 +2713,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2780,7 +2780,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2835,7 +2835,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2893,7 +2893,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -2951,7 +2951,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3006,7 +3006,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3073,7 +3073,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3129,7 +3129,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3185,7 +3185,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3235,7 +3235,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3297,7 +3297,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3355,7 +3355,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3412,7 +3412,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3470,7 +3470,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3539,7 +3539,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3608,7 +3608,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3677,7 +3677,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
@@ -3741,7 +3741,7 @@
     "productType": {
       "$oid": "66caca6cef5ace8edb5cff8b"
     },
-    "productBranch": {
+    "productBrand": {
       "$oid": "66cac8b7ef5ace8edb5cff68"
     },
     "countInStock": 50,
