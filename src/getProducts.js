@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cliProgress = require('cli-progress');
-const axios = require('axios');z
+const axios = require('axios');
 
 async function getProducts(page, url) {
   try {
@@ -10,18 +10,27 @@ async function getProducts(page, url) {
 
     const products = await page.evaluate(() => {
       function replaceID(name) {
-        name = name.replace('\t', '');
-        if (name.search('Yonex')) return '66cac8b7ef5ace8edb5cff68';
-        if (name.search('Lining')) return '66cac89bef5ace8edb5cff63';
-        if (name.search('Kumpoo')) return '66c813b5c9e37580eac489f5';
-        if (name.search('Victor')) return '66cac8c6ef5ace8edb5cff6b';
-        if (name.search('Mizuno')) return '66cac8d6ef5ace8edb5cff6e';
-        if (name.search('Apacs')) return '66cac8e3ef5ace8edb5cff71';
-        if (name.search('VNB')) return '66cac8f2ef5ace8edb5cff74';
-        if (name.search('Proace')) return '66cac904ef5ace8edb5cff77';
-        if (name.search('Forza')) return '66cac91bef5ace8edb5cff7a';
-        if (name.search('FlyPower')) return '66cac93cef5ace8edb5cff7d';
-        if (name.search('Tenway')) return '66cac953ef5ace8edb5cff80';
+        name = name.trim();
+        const ids = {
+          'Yonex': '66cac8b7ef5ace8edb5cff68',
+          'Lining': '66cac89bef5ace8edb5cff63',
+          'Kumpoo': '66c813b5c9e37580eac489f5',
+          'Victor': '66cac8c6ef5ace8edb5cff6b',
+          'Mizuno': '66cac8d6ef5ace8edb5cff6e',
+          'Apacs': '66cac8e3ef5ace8edb5cff71',
+          'VNB': '66cac8f2ef5ace8edb5cff74',
+          'Proace': '66cac904ef5ace8edb5cff77',
+          'Forza': '66cac91bef5ace8edb5cff7a',
+          'FlyPower': '66cac93cef5ace8edb5cff7d',
+          'Tenway': '66cac953ef5ace8edb5cff80',
+          'vot-cau-long': '66caca6cef5ace8edb5cff8b'
+        };
+        for (const [key, $oid] of Object.entries(ids)) {
+          if (name.includes(key)) {
+            return { $oid };
+          }
+        }
+        return null;
       }
 
       const productElements = document.querySelectorAll('.item_product_main');
@@ -29,8 +38,8 @@ async function getProducts(page, url) {
       let part = title.split(' ');
       const lastPart = part[part.length - 1].toLowerCase();
       const productBranch = replaceID(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
-      // const productType = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
-      const productType = "66caca6cef5ace8edb5cff8b";
+      const temp = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+      const productType = replaceID(temp);
       const countInStock = 50;
       const productData = [];
 

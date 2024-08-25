@@ -8,6 +8,7 @@
     "fs": "^0.0.1-security",
     "gitignore": "^0.7.0",
     "mongodb": "^6.8.0",
+    "mongoose": "^8.5.4",
     "p-limit": "^6.1.0",
     "puppeteer": "^23.0.2"
   },

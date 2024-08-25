@@ -2,22 +2,43 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const cliProgress = require('cli-progress');
 
+function replaceID(name) {
+    if (name.includes('Trình Độ Chơi')) name = '1';
+    if (name.includes('Chiều Dài Vợt')) name = '2';
+    if (name.includes('Phong Cách Chơi')) name = '3';
+    if (name.includes('Độ Cứng Đũa')) name = '4';
+    if (name.includes('Điểm Cân Bằng')) name = '5';
+    if (name.includes('Nội Dung Chơi')) name = '6';
+    if (name.includes('Trọng Lượng')) name = '7';
+    if (name.includes('Chiều Dài Cán Vợt')) name = '8';
+    if (name.includes('Swingweight')) name = '9';
+
+
+    const ids = {
+        '1': '66cb3b5b916b971633510a0c',
+        '2': '66cb3ba3916b971633510a0d',
+        '3': '66cb3bba916b971633510a0e',
+        '4': '66cb3bc9916b971633510a0f',
+        '5': '66cb3c21916b971633510a12',
+        '6': '66cb3bd7916b971633510a10',
+        '7': '66cb3be2916b971633510a11',
+        '8': '66cb4468916b971633510a15',
+        '9': '66cb44cd916b971633510a16',
+    };
+    for (const [key, $oid] of Object.entries(ids)) {
+        if (name.includes(key)) {
+            return { $oid };
+        }
+    }
+    return null;
+}
+
 async function getProductDetail(page, url) {
     try {
         await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
         await page.waitForSelector('#tab_thong_so', { timeout: 60000 });
 
         const products = await page.evaluate(() => {
-            function replaceID(name) {
-                name = name.replace('\t', '');
-                if (name.search('Trình độ chơi')) return '66caae814e2dc95e550c94b2';
-                if (name.search('Chiều dài vợt')) return '66caaf0d4e2dc95e550c94b3';
-                if (name.search('Phong cách chơi')) return '66caaf214e2dc95e550c94b4';
-                if (name.search('Độ cứng đũa')) return '66caaf354e2dc95e550c94b5';
-                if (name.search('Điểm cân bằng')) return '66caaf4c4e2dc95e550c94b6';
-                if (name.search('Nội dung chơi')) return '66caaf5d4e2dc95e550c94b7';
-                if (name.search('Trọng lượng')) return '66caaf6e4e2dc95e550c94b8';
-            }
 
             const productData = [];
 
@@ -26,15 +47,14 @@ async function getProductDetail(page, url) {
             const productImagePath = Array.from(document.querySelectorAll('.product-images a'))
                 .map(a => a.getAttribute('href'));
 
-            const description = Array.from(document.querySelectorAll('#tab_gioi_thieu p'))
-                .map(p => p.innerText)
-                .join('\n');
+            const description = Array.from(document.querySelectorAll('#tab_gioi_thieu'))
+                .map(element => element.innerHTML);
 
             const technicalSpecification = Array.from(document.querySelectorAll('#tab_thong_so tr'))
                 .map(tr => {
                     const [specNameElem, specDescElem] = tr.querySelectorAll('b, td:nth-child(2)');
                     return {
-                        specificationName: specNameElem ? replaceID(specNameElem.innerHTML) : '',
+                        specificationName: specNameElem ? specNameElem.innerHTML : '',
                         specificationDesc: specDescElem ? specDescElem.innerHTML : ''
                     };
                 });
@@ -72,27 +92,6 @@ async function scrapeProductDetails(urls) {
         }
         progressBar.increment();
     }
-
-    // const pages = await Promise.all(Array(20).fill(null).map(() => browser.newPage())); 
-
-    // const chunkSize = Math.ceil(urls.length / pages.length);
-    // const taskChunks = Array.from({ length: pages.length }, (_, i) =>
-    //     urls.slice(i * chunkSize, (i + 1) * chunkSize)
-    // );
-
-    // await Promise.all(taskChunks.map(async (taskChunk, index) => {
-    //     const page = pages[index];
-    //     for (const url of taskChunk) {
-    //         try {
-    //             const products = await getProductDetail(page, url);
-    //             totalProducts.push(...products);
-    //         } catch (error) {
-    //             // console.error(`Error scraping ${url}: ${error.message}`);
-    //         }
-    //         progressBar.increment();
-    //     }
-    // }));
-
     await browser.close();
     progressBar.stop();
 
@@ -111,11 +110,15 @@ async function get() {
         let updatedProduct = { ...product };
         productDetails.forEach((productDetail) => {
             if (productDetail.title === product.productName) {
+                let spec = productDetail.technicalSpecification;
+                spec.forEach((item) => {
+                   item.specificationName = replaceID(item.specificationName.toString());
+                });
                 updatedProduct = {
                     ...product,
                     productImagePath: productDetail.productImagePath,
                     description: productDetail.description,
-                    technicalSpecification: productDetail.technicalSpecification,
+                    technicalSpecification: spec,
                     link: undefined
                 };
             }
