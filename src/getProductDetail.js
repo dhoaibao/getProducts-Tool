@@ -3,35 +3,41 @@ const fs = require('fs');
 const cliProgress = require('cli-progress');
 
 function replaceID(name) {
-    if (name.includes('Trình Độ Chơi')) name = '1';
-    if (name.includes('Chiều Dài Vợt')) name = '2';
-    if (name.includes('Phong Cách Chơi')) name = '3';
-    if (name.includes('Độ Cứng Đũa')) name = '4';
-    if (name.includes('Điểm Cân Bằng')) name = '5';
-    if (name.includes('Nội Dung Chơi')) name = '6';
-    if (name.includes('Trọng Lượng')) name = '7';
-    if (name.includes('Chiều Dài Cán Vợt')) name = '8';
-    if (name.includes('Swingweight')) name = '9';
+    if (typeof name === 'string') {
+        name = name.toLowerCase();
+        let id;
+        if (name.includes('trình độ chơi')) id = '1';
+        if (name.includes('chiều dài vợt')) id = '2';
+        if (name.includes('phong cách chơi')) id = '3';
+        if (name.includes('độ cứng đũa')) id = '4';
+        if (name.includes('điểm cân bằng')) id = '5';
+        if (name.includes('nội dung chơi')) id = '6';
+        if (name.includes('trọng lượng')) id = '7';
+        if (name.includes('chiều dài cán vợt')) id = '8';
+        if (name.includes('swingweight')) id = '9';
 
+        const ids = {
+            '1': '66cb3b5b916b971633510a0c',
+            '2': '66cb3ba3916b971633510a0d',
+            '3': '66cb3bba916b971633510a0e',
+            '4': '66cb3bc9916b971633510a0f',
+            '5': '66cb3c21916b971633510a12',
+            '6': '66cb3bd7916b971633510a10',
+            '7': '66cb3be2916b971633510a11',
+            '8': '66cb4468916b971633510a15',
+            '9': '66cb44cd916b971633510a16',
+        };
 
-    const ids = {
-        '1': '66cb3b5b916b971633510a0c',
-        '2': '66cb3ba3916b971633510a0d',
-        '3': '66cb3bba916b971633510a0e',
-        '4': '66cb3bc9916b971633510a0f',
-        '5': '66cb3c21916b971633510a12',
-        '6': '66cb3bd7916b971633510a10',
-        '7': '66cb3be2916b971633510a11',
-        '8': '66cb4468916b971633510a15',
-        '9': '66cb44cd916b971633510a16',
-    };
-    for (const [key, $oid] of Object.entries(ids)) {
-        if (name.includes(key)) {
-            return { $oid };
+        if (id) {
+            for (const [key, $oid] of Object.entries(ids)) {
+                if (id.includes(key)) {
+                    return { $oid };
+                }
+            }
         }
-    }
-    return null;
+    } else return name;
 }
+
 
 async function getProductDetail(page, url) {
     try {
@@ -83,15 +89,41 @@ async function scrapeProductDetails(urls) {
 
     const page = await browser.newPage();
 
-    for (const url of urls) {
-        try {
-            const products = await getProductDetail(page, url);
-            totalProducts.push(...products);
-        } catch (error) {
-            // console.error(`Error scraping ${url}: ${error.message}`);
+    // for (const url of urls) {
+    //     try {
+    //         const products = await getProductDetail(page, url);
+    //         totalProducts.push(...products);
+    //     } catch (error) {
+    //         // console.error(`Error scraping ${url}: ${error.message}`);
+    //     }
+    //     progressBar.increment();
+    // }
+
+    const pages = await Promise.all(Array(20).fill(null).map(() => browser.newPage()));
+
+    const chunkSize = Math.ceil(urls.length / pages.length);
+    const taskChunks = Array.from({ length: pages.length }, (_, i) =>
+        urls.slice(i * chunkSize, (i + 1) * chunkSize)
+    );
+
+    await Promise.all(taskChunks.map(async (taskChunk, index) => {
+        const page = pages[index];
+        const productsForPage = [];
+
+        for (const url of taskChunk) {
+            try {
+                const products = await getProductDetail(page, url);
+                productsForPage.push(...products);
+            } catch (error) {
+                // console.error(`Error scraping ${url}: ${error.message}`);
+            }
+            progressBar.increment();
         }
-        progressBar.increment();
-    }
+
+        totalProducts.push(...productsForPage);
+        await page.close();  // Đóng trang sau khi hoàn thành tất cả các tác vụ
+    }));
+
     await browser.close();
     progressBar.stop();
 
@@ -107,19 +139,22 @@ async function get() {
     const productDetails = await scrapeProductDetails(urls);
 
     const updatedProducts = products.map((product) => {
-        let updatedProduct = { ...product };
+        let updatedProduct = {};
         productDetails.forEach((productDetail) => {
             if (productDetail.title === product.productName) {
                 let spec = productDetail.technicalSpecification;
                 spec.forEach((item) => {
-                   item.specificationName = replaceID(item.specificationName.toString());
+                    item.specificationName = replaceID(item.specificationName.toString());
                 });
                 updatedProduct = {
-                    ...product,
+                    productName: product.productName,
+                    price: product.price,
+                    productType: product.productType,
+                    productBrand: product.productBrand,
+                    countInStock : product.countInStock,
                     productImagePath: productDetail.productImagePath,
                     description: productDetail.description,
                     technicalSpecification: spec,
-                    link: undefined
                 };
             }
         });

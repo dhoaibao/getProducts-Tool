@@ -37,7 +37,7 @@ async function getProducts(page, url) {
       const title = document.querySelector('.title-page')?.innerText;
       let part = title.split(' ');
       const lastPart = part[part.length - 1].toLowerCase();
-      const productBranch = replaceID(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
+      const productBrand = replaceID(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
       const temp = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
       const productType = replaceID(temp);
       const countInStock = 50;
@@ -49,7 +49,7 @@ async function getProducts(page, url) {
         const priceText = product.querySelector('.price-box')?.innerText;
         // const productImagePath = product.querySelector('.lazyload.loaded')?.getAttribute('src');
         const price = parseInt(priceText.replace(/\./g, '').replace(' ₫', ''), 10);
-        productData.push({ productName, price, productType, productBranch, countInStock, link });
+        productData.push({ productName, price, productType, productBrand, countInStock, link });
       });
 
       return productData;
@@ -63,14 +63,14 @@ async function getProducts(page, url) {
 
 const listUrls = [
   'https://shopvnb.com/vot-cau-long-yonex.html',
-  // 'https://shopvnb.com/vot-cau-long-victor.html',
-  // 'https://shopvnb.com/vot-cau-long-lining.html',
-  // 'https://shopvnb.com/vot-cau-long-mizuno.html',
-  // 'https://shopvnb.com/vot-cau-long-apacs.html',
-  // 'https://shopvnb.com/vot-cau-long-vnb.html',
-  // 'https://shopvnb.com/vot-cau-long-proace.html',
-  // 'https://shopvnb.com/vot-cau-long-flypower.html',
-  // 'https://shopvnb.com/vot-cau-long-tenway.html',
+  'https://shopvnb.com/vot-cau-long-victor.html',
+  'https://shopvnb.com/vot-cau-long-lining.html',
+  'https://shopvnb.com/vot-cau-long-mizuno.html',
+  'https://shopvnb.com/vot-cau-long-apacs.html',
+  'https://shopvnb.com/vot-cau-long-vnb.html',
+  'https://shopvnb.com/vot-cau-long-proace.html',
+  'https://shopvnb.com/vot-cau-long-flypower.html',
+  'https://shopvnb.com/vot-cau-long-tenway.html',
 ];
 
 async function urlExists(url) {
@@ -94,11 +94,28 @@ async function processUrls(listUrls, numPages) {
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
+  // const urls = listUrls.map(url =>
+  //   Array.from({ length: numPages }, (_, j) => ({
+  //     url: j === 0 ? url : `${url}?page=${j+1}`,
+  //   }))
+  // );
+
+  // const page = await browser.newPage();
+  // for (const url of urls) {
+  //   try {
+  //     const products = await getProductDetail(page, url);
+  //     totalProducts.push(...products);
+  //   } catch (error) {
+  //     // console.error(`Error scraping ${url}: ${error.message}`);
+  //   }
+  //   progressBar.increment();
+  // }
+
   const pages = await Promise.all(Array(5).fill(null).map(() => browser.newPage())); // Open 5 pages
 
   const tasks = listUrls.flatMap(baseUrl =>
     Array.from({ length: numPages }, (_, j) => ({
-      url: j === 1 ? baseUrl : `${baseUrl}?page=${j + 1}`,
+      url: j === 0 ? baseUrl : `${baseUrl}?page=${j + 1}`,
     }))
   );
 
