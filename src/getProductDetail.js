@@ -4,17 +4,21 @@ const cliProgress = require('cli-progress');
 
 function replaceID(name) {
     if (typeof name === 'string') {
-        name = name.toLowerCase();
-        let id;
-        if (name.includes('trình độ chơi')) id = '1';
-        if (name.includes('chiều dài vợt')) id = '2';
-        if (name.includes('phong cách chơi')) id = '3';
-        if (name.includes('độ cứng đũa')) id = '4';
-        if (name.includes('điểm cân bằng')) id = '5';
-        if (name.includes('nội dung chơi')) id = '6';
-        if (name.includes('trọng lượng')) id = '7';
-        if (name.includes('chiều dài cán vợt')) id = '8';
-        if (name.includes('swingweight')) id = '9';
+        name = name.toLowerCase().trim();
+        let id = null;
+        if (name === 'trình độ chơi:') id = '1';
+        if (name === 'chiều dài vợt:') id = '2';
+        if (name === 'phong cách chơi:') id = '3';
+        if (name === 'độ cứng đũa:') id = '4';
+        if (name === 'điểm cân bằng:') id = '5';
+        if (name === 'nội dung chơi:') id = '6';
+        if (name === 'trọng lượng:') id = '7';
+        if (name === 'chiều dài cán vợt:') id = '8';
+        if (name === 'swingweight:') id = '9';
+        if (name === 'số ngăn lớn:') id = '10';
+        if (name === 'đối tượng:') id = '11';
+        if (name === 'thể loại túi:') id = '12';
+        if (name === 'điểm nổi bật:') id = '13';
 
         const ids = {
             '1': '66cb3b5b916b971633510a0c',
@@ -26,11 +30,15 @@ function replaceID(name) {
             '7': '66cb3be2916b971633510a11',
             '8': '66cb4468916b971633510a15',
             '9': '66cb44cd916b971633510a16',
+            '10': '66d71a1197b525267d89ba94',
+            '11': '66d71a2197b525267d89ba95',
+            '12': '66e8c89d9be3ab34bbc3d89a',
+            '13': '66e8c8e89be3ab34bbc3d89b',
         };
 
         if (id) {
             for (const [key, $oid] of Object.entries(ids)) {
-                if (id.includes(key)) {
+                if (id === key) {
                     return { $oid };
                 }
             }

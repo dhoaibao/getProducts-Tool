@@ -23,10 +23,19 @@ async function getProducts(page, url) {
           'Forza': '66cac91bef5ace8edb5cff7a',
           'FlyPower': '66cac93cef5ace8edb5cff7d',
           'Tenway': '66cac953ef5ace8edb5cff80',
-          'vot-cau-long': '66caca6cef5ace8edb5cff8b'
+          'Kason': '66e8cd3b9be3ab34bbc3d951',
+          'Kawasaki': '66e8cd859be3ab34bbc3d953',
+          'Forza': '66e8cda89be3ab34bbc3d954',
+          'Adonex': '66e8cdd59be3ab34bbc3d955',
+          'Kumpoo': '66e8cdf69be3ab34bbc3d956',
+          'Teway': '66e8ce219be3ab34bbc3d957',
+          'Sunbatta': '66e8ce549be3ab34bbc3d958',
+          'vot-cau-long': '66caca6cef5ace8edb5cff8b',
+          'tui-vot-cau-long': '66d718edd6c02fe695f1ad1b',
+          'balo-cau-long': '66e8cedc9be3ab34bbc3d959'
         };
         for (const [key, $oid] of Object.entries(ids)) {
-          if (name.includes(key)) {
+          if (name === key) {
             return { $oid };
           }
         }
@@ -62,15 +71,17 @@ async function getProducts(page, url) {
 }
 
 const listUrls = [
-  'https://shopvnb.com/vot-cau-long-yonex.html',
-  'https://shopvnb.com/vot-cau-long-victor.html',
-  'https://shopvnb.com/vot-cau-long-lining.html',
-  'https://shopvnb.com/vot-cau-long-mizuno.html',
-  'https://shopvnb.com/vot-cau-long-apacs.html',
-  'https://shopvnb.com/vot-cau-long-vnb.html',
-  'https://shopvnb.com/vot-cau-long-proace.html',
-  'https://shopvnb.com/vot-cau-long-flypower.html',
-  'https://shopvnb.com/vot-cau-long-tenway.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-lining.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-yonex.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-victor.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-kawasaki.html', 
+  // 'https://shopvnb.com/tui-vot-cau-long-mizuno.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-kumpoo.html',
+
+  // 'https://shopvnb.com/vot-cau-long-yonex.html',
+  // 'https://shopvnb.com/vot-cau-long-victor.html',
+  // 'https://shopvnb.com/vot-cau-long-lining.html',
+  
 ];
 
 async function urlExists(url) {
