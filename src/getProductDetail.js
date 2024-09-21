@@ -1,7 +1,9 @@
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const cliProgress = require('cli-progress');
+import puppeteer from 'puppeteer';
+import fs from 'fs';
+import cliProgress from 'cli-progress';
+import pLimit from 'p-limit'; // Giới hạn số lượng yêu cầu song song
 
+// Hàm thay thế tên specification với ID
 function replaceID(name) {
     if (typeof name === 'string') {
         name = name.toLowerCase().trim();
@@ -19,6 +21,7 @@ function replaceID(name) {
         if (name === 'đối tượng:') id = '11';
         if (name === 'thể loại túi:') id = '12';
         if (name === 'điểm nổi bật:') id = '13';
+        if (name === 'thể loại balo:') id = '14';
 
         const ids = {
             '1': '66cb3b5b916b971633510a0c',
@@ -34,103 +37,92 @@ function replaceID(name) {
             '11': '66d71a2197b525267d89ba95',
             '12': '66e8c89d9be3ab34bbc3d89a',
             '13': '66e8c8e89be3ab34bbc3d89b',
+            '14': '66ee37f08c81c3fca51ba4b5',
         };
 
         if (id) {
-            for (const [key, $oid] of Object.entries(ids)) {
-                if (id === key) {
-                    return { $oid };
-                }
-            }
+            return { $oid: ids[id] };
         }
-    } else return name;
+    } 
+    return name;
 }
 
+// Hàm lấy thông tin chi tiết sản phẩm và có cơ chế retry
+async function getProductDetailWithRetry(page, url, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+            await page.waitForSelector('.bodywrap', { timeout: 60000 });
 
-async function getProductDetail(page, url) {
-    try {
-        await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
-        await page.waitForSelector('#tab_thong_so', { timeout: 60000 });
+            const products = await page.evaluate(() => {
+                const productData = [];
+                const title = document.querySelector('.title-product')?.innerText;
+                const productImagePath = Array.from(document.querySelectorAll('.product-images a'))
+                    .map(a => a.getAttribute('href'));
+                const description = Array.from(document.querySelectorAll('#tab_gioi_thieu'))
+                    .map(element => element.innerHTML);
+                const technicalSpecification = Array.from(document.querySelectorAll('#tab_thong_so tr'))
+                    .map(tr => {
+                        const [specNameElem, specDescElem] = tr.querySelectorAll('b, td:nth-child(2)');
+                        return {
+                            specificationName: specNameElem ? specNameElem.innerHTML : '',
+                            specificationDesc: specDescElem ? specDescElem.innerHTML : ''
+                        };
+                    });
+                productData.push({ title, productImagePath, description, technicalSpecification });
+                return productData;
+            });
 
-        const products = await page.evaluate(() => {
-
-            const productData = [];
-
-            const title = document.querySelector('.title-product')?.innerText;
-
-            const productImagePath = Array.from(document.querySelectorAll('.product-images a'))
-                .map(a => a.getAttribute('href'));
-
-            const description = Array.from(document.querySelectorAll('#tab_gioi_thieu'))
-                .map(element => element.innerHTML);
-
-            const technicalSpecification = Array.from(document.querySelectorAll('#tab_thong_so tr'))
-                .map(tr => {
-                    const [specNameElem, specDescElem] = tr.querySelectorAll('b, td:nth-child(2)');
-                    return {
-                        specificationName: specNameElem ? specNameElem.innerHTML : '',
-                        specificationDesc: specDescElem ? specDescElem.innerHTML : ''
-                    };
-                });
-            productData.push({ title, productImagePath, description, technicalSpecification });
-
-            return productData;
-        });
-
-        return products;
-    } catch (error) {
-        return [];
+            return products;
+        } catch (error) {
+            if (i === retries - 1) {
+                console.error(`Failed to scrape ${url} after ${retries} retries: ${error.message}`);
+                return [];
+            }
+            console.log(`Retrying (${i + 1}/${retries}) for ${url}`);
+        }
     }
 }
 
+// Hàm scrape chi tiết sản phẩm với cơ chế giới hạn song song và lưu từng phần
 async function scrapeProductDetails(urls) {
     const totalTasks = urls.length;
     const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
     progressBar.start(totalTasks, 0);
 
     let totalProducts = [];
-
     const browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
-    const page = await browser.newPage();
-
-    // for (const url of urls) {
-    //     try {
-    //         const products = await getProductDetail(page, url);
-    //         totalProducts.push(...products);
-    //     } catch (error) {
-    //         // console.error(`Error scraping ${url}: ${error.message}`);
-    //     }
-    //     progressBar.increment();
-    // }
-
     const pages = await Promise.all(Array(20).fill(null).map(() => browser.newPage()));
-
     const chunkSize = Math.ceil(urls.length / pages.length);
     const taskChunks = Array.from({ length: pages.length }, (_, i) =>
         urls.slice(i * chunkSize, (i + 1) * chunkSize)
     );
 
-    await Promise.all(taskChunks.map(async (taskChunk, index) => {
-        const page = pages[index];
-        const productsForPage = [];
+    const limit = pLimit(5); // Giới hạn chỉ 5 trang chạy song song
 
-        for (const url of taskChunk) {
-            try {
-                const products = await getProductDetail(page, url);
-                productsForPage.push(...products);
-            } catch (error) {
-                // console.error(`Error scraping ${url}: ${error.message}`);
+    await Promise.all(taskChunks.map((taskChunk, index) => 
+        limit(async () => {
+            const page = pages[index];
+            const productsForPage = [];
+
+            for (const url of taskChunk) {
+                try {
+                    const products = await getProductDetailWithRetry(page, url);
+                    productsForPage.push(...products);
+                } catch (error) {
+                    console.error(`Error scraping ${url}: ${error.message}`);
+                }
+                progressBar.increment();
             }
-            progressBar.increment();
-        }
 
-        totalProducts.push(...productsForPage);
-        await page.close();  // Đóng trang sau khi hoàn thành tất cả các tác vụ
-    }));
+            totalProducts.push(...productsForPage);
+            await page.close();
+        })
+    ));
 
     await browser.close();
     progressBar.stop();
@@ -138,6 +130,7 @@ async function scrapeProductDetails(urls) {
     return totalProducts;
 }
 
+// Hàm chính
 async function get() {
     const fileContent = fs.readFileSync("./src/result/products.json", 'utf-8');
     const products = JSON.parse(fileContent);
@@ -168,11 +161,8 @@ async function get() {
         });
         return updatedProduct;
     });
-
-    // console.log(updatedProducts);
-
-    const filePath = "./src/result/products-detail.json";
-    fs.writeFileSync(filePath, JSON.stringify(updatedProducts, null, 2), 'utf-8');
+    
+    fs.writeFileSync("./src/result/products-detail.json", JSON.stringify(updatedProducts, null, 2), 'utf-8');
 
     console.log(`Done!\nTotal number of products after updated successfully: ${updatedProducts.length}`);
 }
