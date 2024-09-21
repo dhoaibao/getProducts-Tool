@@ -52,15 +52,16 @@ async function getProducts(page, url, retries = 3) {
         const temp = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
         const productType = replaceID(temp);
         const countInStock = 50;
+        const discount = {$oid : '66ca9dc92e0cf6b9be6806a0'};
+        const promotion = {$oid : '66ee63e22d296cdd27688fe5'};
         const productData = [];
 
         productElements.forEach(product => {
           const productName = product.querySelector('.product-name')?.innerText;
           const link = "https://shopvnb.com/".concat(product.querySelector('.product-name a')?.getAttribute('href'));
           const priceText = product.querySelector('.price-box')?.innerText;
-          // const productImagePath = product.querySelector('.lazyload.loaded')?.getAttribute('src');
           const price = parseInt(priceText.replace(/\./g, '').replace(' ₫', ''), 10);
-          productData.push({ productName, price, productType, productBrand, countInStock, link });
+          productData.push({ productName, price, discount, promotion, productType, productBrand, countInStock, link });
         });
 
         return productData;
@@ -144,31 +145,37 @@ async function processUrls(listUrls, numPages) {
 }
 
 const listUrls = [
-  'https://shopvnb.com/tui-vot-cau-long-lining.html',
+  'https://shopvnb.com/vot-cau-long-yonex.html',
+  'https://shopvnb.com/vot-cau-long-victor.html',
+  'https://shopvnb.com/vot-cau-long-lining.html',
+  'https://shopvnb.com/vot-cau-long-mizuno.html',
+  'https://shopvnb.com/vot-cau-long-apacs.html',
+  'https://shopvnb.com/vot-cau-long-vnb.html',
+  'https://shopvnb.com/vot-cau-long-proace.html',
+  'https://shopvnb.com/vot-cau-long-flypower.html',
+  'https://shopvnb.com/vot-cau-long-tenway.html',
+
   'https://shopvnb.com/tui-vot-cau-long-yonex.html',
   'https://shopvnb.com/tui-vot-cau-long-victor.html',
+  'https://shopvnb.com/tui-vot-cau-long-lining.html',
+  'https://shopvnb.com/tui-vot-cau-long-kason.html',
   'https://shopvnb.com/tui-vot-cau-long-kawasaki.html',
+  'https://shopvnb.com/tui-vot-cau-long-forza.html',
+  'https://shopvnb.com/tui-vot-cau-long-apacs.html',
   'https://shopvnb.com/tui-vot-cau-long-mizuno.html',
+  'https://shopvnb.com/tui-vot-cau-long-adonex.html',
   'https://shopvnb.com/tui-vot-cau-long-kumpoo.html',
 
-  // 'https://shopvnb.com/vot-cau-long-yonex.html',
-  // 'https://shopvnb.com/vot-cau-long-victor.html',
-  // 'https://shopvnb.com/vot-cau-long-lining.html',
-  // 'https://shopvnb.com/vot-cau-long-mizuno.html',
-  // 'https://shopvnb.com/vot-cau-long-apacs.html',
-  // 'https://shopvnb.com/vot-cau-long-vnb.html',
-  // 'https://shopvnb.com/vot-cau-long-proace.html',
-  // 'https://shopvnb.com/vot-cau-long-forza.html',
-  // 'https://shopvnb.com/vot-cau-long-flypower.html',
-
-  // 'https://shopvnb.com/balo-cau-long-yonex.html',
-  // 'https://shopvnb.com/balo-cau-long-victor.html',
-  // 'https://shopvnb.com/balo-cau-long-kawasaki.html',
-  // 'https://shopvnb.com/balo-cau-long-mizuno.html',
-  // 'https://shopvnb.com/balo-cau-long-lining.html',
-  // 'https://shopvnb.com/balo-cau-long-sunbatta.html',
-  // 'https://shopvnb.com/balo-cau-long-adonex.html',
-
+  'https://shopvnb.com/balo-cau-long-yonex.html',
+  'https://shopvnb.com/balo-cau-long-victor.html',
+  'https://shopvnb.com/balo-cau-long-kawasaki.html',
+  'https://shopvnb.com/balo-cau-long-flypower.html',
+  'https://shopvnb.com/balo-cau-long-mizuno.html',
+  'https://shopvnb.com/balo-cau-long-mizuno.html',
+  'https://shopvnb.com/balo-cau-long-adonex.html',
+  'https://shopvnb.com/balo-cau-long-forza.html',
+  'https://shopvnb.com/balo-cau-long-lining.html',
+  'https://shopvnb.com/balo-cau-long-sunbatta.html',
 ];
 
 console.log('Start scraping products...');

@@ -150,6 +150,8 @@ async function get() {
                 updatedProduct = {
                     productName: product.productName,
                     price: product.price,
+                    discount: product.discount,
+                    promotion: product.promotion,
                     productType: product.productType,
                     productBrand: product.productBrand,
                     countInStock : product.countInStock,
@@ -161,7 +163,7 @@ async function get() {
         });
         return updatedProduct;
     });
-    
+
     fs.writeFileSync("./src/result/products-detail.json", JSON.stringify(updatedProducts, null, 2), 'utf-8');
 
     console.log(`Done!\nTotal number of products after updated successfully: ${updatedProducts.length}`);
