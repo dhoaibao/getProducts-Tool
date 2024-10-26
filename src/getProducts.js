@@ -12,33 +12,44 @@ async function getProducts(page, url, retries = 3) {
 
       const products = await page.evaluate(() => {
         function replaceID(name) {
-          name = name.trim();
+          name = name.trim().toLowerCase();
           const ids = {
-            'Yonex': '66cac8b7ef5ace8edb5cff68',
-            'Lining': '66cac89bef5ace8edb5cff63',
-            'Kumpoo': '66c813b5c9e37580eac489f5',
-            'Victor': '66cac8c6ef5ace8edb5cff6b',
-            'Mizuno': '66cac8d6ef5ace8edb5cff6e',
-            'Apacs': '66cac8e3ef5ace8edb5cff71',
-            'VNB': '66cac8f2ef5ace8edb5cff74',
-            'Proace': '66cac904ef5ace8edb5cff77',
-            'Forza': '66cac91bef5ace8edb5cff7a',
-            'FlyPower': '66cac93cef5ace8edb5cff7d',
-            'Tenway': '66cac953ef5ace8edb5cff80',
-            'Kason': '66e8cd3b9be3ab34bbc3d951',
-            'Kawasaki': '66e8cd859be3ab34bbc3d953',
-            'Forza': '66e8cda89be3ab34bbc3d954',
-            'Adonex': '66e8cdd59be3ab34bbc3d955',
-            'Kumpoo': '66e8cdf69be3ab34bbc3d956',
-            'Teway': '66e8ce219be3ab34bbc3d957',
-            'Sunbatta': '66e8ce549be3ab34bbc3d958',
-            'vot-cau-long': '66caca6cef5ace8edb5cff8b',
-            'tui-vot-cau-long': '66d718edd6c02fe695f1ad1b',
-            'balo-cau-long': '66e8cedc9be3ab34bbc3d959'
+            'vợt cầu lông yonex': '671cac35e1555600143a785c',
+            'vợt cầu lông victor': '671cb61d6216dde784fba399',
+            'vợt cầu lông lining': '671cb6226216dde784fba3a4',
+            'vợt cầu lông mizuno': '671cb6276216dde784fba3ad',
+            'vợt cầu lông apacs': '671cb62c6216dde784fba3b6',
+            'vợt cầu lông vnb': '671cb6306216dde784fba3bf',
+            'vợt cầu lông proace': '671cb6366216dde784fba3c8',
+            'vợt cầu lông flypower': '671cb63c6216dde784fba3d1',
+            'vợt cầu lông tenway': '671cb6416216dde784fba3dc',
+
+            'túi vợt cầu lông yonex': '671cb85e6216dde784fbb63a',
+            'túi vợt cầu lông victor': '671cb8666216dde784fbb645',
+            'túi vợt cầu lông lining': '671cb86d6216dde784fbb64e',
+            'túi vợt cầu lông kason': '671cb8846216dde784fbb665',
+            'túi vợt cầu lông kawasaki': '671cb8a26216dde784fbb67c',
+            'túi vợt cầu lông forza': '671cb9116216dde784fbb69d',
+            'túi vợt cầu lông apacs': '671cb9196216dde784fbb6a8',
+            'túi vợt cầu lông mizuno': '671cb9206216dde784fbb6b1',
+            'túi vợt cầu lông adonex': '671cb9266216dde784fbb6ba',
+            'túi vợt cầu lông kumpoo': '671cb92c6216dde784fbb6c3',
+
+            'balo cầu lông yonex': '671cbab16216dde784fbc158',
+            'balo cầu lông victor': '671cbab76216dde784fbc161',
+            'balo cầu lông kawasaki': '671cbabf6216dde784fbc16a',
+            'balo cầu lông flypower': '671cbacb6216dde784fbc175',
+            'balo cầu lông mizuno': '671cbad36216dde784fbc17e',
+            'balo cầu lông adonex': '671cbadb6216dde784fbc187',
           };
-          for (const [key, $oid] of Object.entries(ids)) {
+          // for (const [key, $oid] of Object.entries(ids)) {
+          //   if (name === key) {
+          //     return { $oid };
+          //   }
+          // }
+          for (const [key, id] of Object.entries(ids)) {
             if (name === key) {
-              return { $oid };
+              return id;
             }
           }
           return null;
@@ -46,14 +57,12 @@ async function getProducts(page, url, retries = 3) {
 
         const productElements = document.querySelectorAll('.item_product_main');
         const title = document.querySelector('.title-page')?.innerText;
-        let part = title.split(' ');
-        const lastPart = part[part.length - 1].toLowerCase();
-        const productBrand = replaceID(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
-        const temp = part.slice(0, part.length - 1).join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
-        const productType = replaceID(temp);
+        const category = replaceID(title);
         const countInStock = 50;
-        const discount = {$oid : '66ca9dc92e0cf6b9be6806a0'};
-        const promotion = {$oid : '66ee63e22d296cdd27688fe5'};
+        // const discount = {$oid : '66ca9dc92e0cf6b9be6806a0'};
+        // const promotion = {$oid : '66ee63e22d296cdd27688fe5'};
+        const discount = '66ca9dc92e0cf6b9be6806a0';
+        const promotion = '66ee63e22d296cdd27688fe5';
         const productData = [];
 
         productElements.forEach(product => {
@@ -61,7 +70,7 @@ async function getProducts(page, url, retries = 3) {
           const link = "https://shopvnb.com/".concat(product.querySelector('.product-name a')?.getAttribute('href'));
           const priceText = product.querySelector('.price-box')?.innerText;
           const price = parseInt(priceText.replace(/\./g, '').replace(' ₫', ''), 10);
-          productData.push({ productName, price, discount, promotion, productType, productBrand, countInStock, link });
+          productData.push({ productName, category, price, discount, promotion, countInStock, link });
         });
 
         return productData;
@@ -114,7 +123,7 @@ async function processUrls(listUrls, numPages) {
 
   const limit = pLimit(5); // Giới hạn chỉ 5 trang chạy song song
 
-  await Promise.all(taskChunks.map((taskChunk, index) => 
+  await Promise.all(taskChunks.map((taskChunk, index) =>
     limit(async () => {
       const page = pages[index];
 
@@ -125,7 +134,7 @@ async function processUrls(listUrls, numPages) {
             const products = await getProducts(page, url);
             totalProducts.push(...products);
           } catch (error) {
-            console.error(`Error scraping ${url}: ${error.message}`);        
+            console.error(`Error scraping ${url}: ${error.message}`);
           }
         }
         progressBar.increment();
@@ -145,32 +154,31 @@ async function processUrls(listUrls, numPages) {
 }
 
 const listUrls = [
-  'https://shopvnb.com/vot-cau-long-yonex.html',
-  'https://shopvnb.com/vot-cau-long-victor.html',
-  'https://shopvnb.com/vot-cau-long-lining.html',
-  'https://shopvnb.com/vot-cau-long-mizuno.html',
-  'https://shopvnb.com/vot-cau-long-apacs.html',
-  'https://shopvnb.com/vot-cau-long-vnb.html',
-  'https://shopvnb.com/vot-cau-long-proace.html',
-  'https://shopvnb.com/vot-cau-long-flypower.html',
-  'https://shopvnb.com/vot-cau-long-tenway.html',
+  // 'https://shopvnb.com/vot-cau-long-yonex.html',
+  // 'https://shopvnb.com/vot-cau-long-victor.html',
+  // 'https://shopvnb.com/vot-cau-long-lining.html',
+  // 'https://shopvnb.com/vot-cau-long-mizuno.html',
+  // 'https://shopvnb.com/vot-cau-long-apacs.html',
+  // 'https://shopvnb.com/vot-cau-long-vnb.html',
+  // 'https://shopvnb.com/vot-cau-long-proace.html',
+  // 'https://shopvnb.com/vot-cau-long-flypower.html',
+  // 'https://shopvnb.com/vot-cau-long-tenway.html',
 
-  'https://shopvnb.com/tui-vot-cau-long-yonex.html',
-  'https://shopvnb.com/tui-vot-cau-long-victor.html',
-  'https://shopvnb.com/tui-vot-cau-long-lining.html',
-  'https://shopvnb.com/tui-vot-cau-long-kason.html',
-  'https://shopvnb.com/tui-vot-cau-long-kawasaki.html',
-  'https://shopvnb.com/tui-vot-cau-long-forza.html',
-  'https://shopvnb.com/tui-vot-cau-long-apacs.html',
-  'https://shopvnb.com/tui-vot-cau-long-mizuno.html',
-  'https://shopvnb.com/tui-vot-cau-long-adonex.html',
-  'https://shopvnb.com/tui-vot-cau-long-kumpoo.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-yonex.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-victor.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-lining.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-kason.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-kawasaki.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-forza.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-apacs.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-mizuno.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-adonex.html',
+  // 'https://shopvnb.com/tui-vot-cau-long-kumpoo.html',
 
   'https://shopvnb.com/balo-cau-long-yonex.html',
   'https://shopvnb.com/balo-cau-long-victor.html',
   'https://shopvnb.com/balo-cau-long-kawasaki.html',
   'https://shopvnb.com/balo-cau-long-flypower.html',
-  'https://shopvnb.com/balo-cau-long-mizuno.html',
   'https://shopvnb.com/balo-cau-long-mizuno.html',
   'https://shopvnb.com/balo-cau-long-adonex.html',
   'https://shopvnb.com/balo-cau-long-forza.html',
@@ -179,4 +187,4 @@ const listUrls = [
 ];
 
 console.log('Start scraping products...');
-processUrls(listUrls, 3);
+processUrls(listUrls, 1);

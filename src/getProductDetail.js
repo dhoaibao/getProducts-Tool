@@ -24,24 +24,25 @@ function replaceID(name) {
         if (name === 'thể loại balo:') id = '14';
 
         const ids = {
-            '1': '66cb3b5b916b971633510a0c',
-            '2': '66cb3ba3916b971633510a0d',
-            '3': '66cb3bba916b971633510a0e',
-            '4': '66cb3bc9916b971633510a0f',
-            '5': '66cb3c21916b971633510a12',
-            '6': '66cb3bd7916b971633510a10',
-            '7': '66cb3be2916b971633510a11',
-            '8': '66cb4468916b971633510a15',
-            '9': '66cb44cd916b971633510a16',
-            '10': '66d71a1197b525267d89ba94',
-            '11': '66d71a2197b525267d89ba95',
-            '12': '66e8c89d9be3ab34bbc3d89a',
-            '13': '66e8c8e89be3ab34bbc3d89b',
-            '14': '66ee37f08c81c3fca51ba4b5',
+            '1': '671ca928e1555600143a77c8',
+            '2': '671ca931e1555600143a77cb',
+            '3': '671ca93ae1555600143a77ce',
+            '4': '671ca947e1555600143a77d3',
+            '5': '671ca979e1555600143a77d8',
+            '6': '671ca984e1555600143a77dd',
+            '7': '671ca992e1555600143a77e0',
+            '8': '671ca99de1555600143a77e5',
+            '9': '671ca9a9e1555600143a77e8',
+            '10': '671ca9b4e1555600143a77eb',
+            '11': '671ca9bee1555600143a77f0',
+            '12': '671ca9c9e1555600143a77f3',
+            '13': '671ca9d5e1555600143a77f6',
+            '14': '671ca9e0e1555600143a77fb',
         };
 
         if (id) {
-            return { $oid: ids[id] };
+            // return { $oid: ids[id] };
+            return ids[id];
         }
     } 
     return name;
@@ -59,8 +60,9 @@ async function getProductDetailWithRetry(page, url, retries = 3) {
                 const title = document.querySelector('.title-product')?.innerText;
                 const productImagePath = Array.from(document.querySelectorAll('.product-images a'))
                     .map(a => a.getAttribute('href'));
-                const description = Array.from(document.querySelectorAll('#tab_gioi_thieu'))
-                    .map(element => element.innerHTML);
+                                const description = Array.from(document.querySelectorAll('#tab_gioi_thieu'))
+                                    .map(element => element.innerHTML)
+                                    .join('');
                 const technicalSpecification = Array.from(document.querySelectorAll('#tab_thong_so tr'))
                     .map(tr => {
                         const [specNameElem, specDescElem] = tr.querySelectorAll('b, td:nth-child(2)');
@@ -152,8 +154,7 @@ async function get() {
                     price: product.price,
                     discount: product.discount,
                     promotion: product.promotion,
-                    productType: product.productType,
-                    productBrand: product.productBrand,
+                    category: product.category,
                     countInStock : product.countInStock,
                     productImagePath: productDetail.productImagePath,
                     description: productDetail.description,
