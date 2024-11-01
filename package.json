@@ -6,7 +6,7 @@
     "fs": "^0.0.1-security",
     "gitignore": "^0.7.0",
     "p-limit": "^6.1.0",
-    "puppeteer": "^23.6.0"
+    "puppeteer": "^23.6.1"
   },
   "scripts": {
     "start": "clear && bun run ./src/getProducts.js  && bun run ./src/getProductDetail.js && bun run ./src/addProductToDb.js"

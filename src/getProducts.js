@@ -41,6 +41,21 @@ async function getProducts(page, url, retries = 3) {
             'balo cầu lông flypower': '671cbacb6216dde784fbc175',
             'balo cầu lông mizuno': '671cbad36216dde784fbc17e',
             'balo cầu lông adonex': '671cbadb6216dde784fbc187',
+
+            'túi đựng giày': '6721f2191b086dac2541c7e0',
+            'vớ cầu lông': '6721f4fef34e16b760cb76a6',
+            'cước đan vợt cầu lông': '6721f6cef34e16b760cb7892',
+            'quả cầu lông': '6721fad5f34e16b760cb7b0f',
+            'bình nước cầu lông': '6721fb53f34e16b760cb7c23',
+            'quấn cán cầu lông': '6721fbb3f34e16b760cb7d13',
+            'móc khóa cầu lông': '6721ff72f34e16b760cb7f78',
+
+            'vợt tennis wilson': '672472dbda52ac7cec958115',            
+            'vợt tennis babolat': '6724738a614df2a226fedc2b',            
+            'vợt tennis yonex': '67247396614df2a226fedc34',            
+            'vợt tennis head': '672473a2614df2a226fedc47',
+            'vợt tennis prince': '672473ad614df2a226fedc50',                      
+            'vợt tennis tecnifibre': '672473f16ad384ea783e9c2b',                      
           };
           // for (const [key, $oid] of Object.entries(ids)) {
           //   if (name === key) {
@@ -52,7 +67,7 @@ async function getProducts(page, url, retries = 3) {
               return id;
             }
           }
-          return null;
+          return name;
         }
 
         const productElements = document.querySelectorAll('.item_product_main');
@@ -62,7 +77,7 @@ async function getProducts(page, url, retries = 3) {
         // const discount = {$oid : '66ca9dc92e0cf6b9be6806a0'};
         // const promotion = {$oid : '66ee63e22d296cdd27688fe5'};
         const discount = '66ca9dc92e0cf6b9be6806a0';
-        const promotion = '66ee63e22d296cdd27688fe5';
+        const promotion = '66fc19da144b342832933967';
         const productData = [];
 
         productElements.forEach(product => {
@@ -175,15 +190,30 @@ const listUrls = [
   // 'https://shopvnb.com/tui-vot-cau-long-adonex.html',
   // 'https://shopvnb.com/tui-vot-cau-long-kumpoo.html',
 
-  'https://shopvnb.com/balo-cau-long-yonex.html',
-  'https://shopvnb.com/balo-cau-long-victor.html',
-  'https://shopvnb.com/balo-cau-long-kawasaki.html',
-  'https://shopvnb.com/balo-cau-long-flypower.html',
-  'https://shopvnb.com/balo-cau-long-mizuno.html',
-  'https://shopvnb.com/balo-cau-long-adonex.html',
-  'https://shopvnb.com/balo-cau-long-forza.html',
-  'https://shopvnb.com/balo-cau-long-lining.html',
-  'https://shopvnb.com/balo-cau-long-sunbatta.html',
+  // 'https://shopvnb.com/balo-cau-long-yonex.html',
+  // 'https://shopvnb.com/balo-cau-long-victor.html',
+  // 'https://shopvnb.com/balo-cau-long-kawasaki.html',
+  // 'https://shopvnb.com/balo-cau-long-flypower.html',
+  // 'https://shopvnb.com/balo-cau-long-mizuno.html',
+  // 'https://shopvnb.com/balo-cau-long-adonex.html',
+  // 'https://shopvnb.com/balo-cau-long-forza.html',
+  // 'https://shopvnb.com/balo-cau-long-lining.html',
+  // 'https://shopvnb.com/balo-cau-long-sunbatta.html',
+
+  // 'https://shopvnb.com/tui-dung-giay.html',
+  // 'https://shopvnb.com/vo-cau-long.html',
+  // 'https://shopvnb.com/cuoc-dan-vot-cau-long.html',
+  // 'https://shopvnb.com/qua-cau-long.html',
+  // 'https://shopvnb.com/binh-nuoc-cau-long.html',
+  // 'https://shopvnb.com/quan-can-cau-long.html'
+  // 'https://shopvnb.com/moc-khoa-cau-long1.html',
+
+  // 'https://shopvnb.com/vot-tennis-wilson.html',
+  // 'https://shopvnb.com/vot-tennis-babolat.html',
+  'https://shopvnb.com/vot-tennis-yonex.html',
+  // 'https://shopvnb.com/vot-tennis-head.html',
+  // 'https://shopvnb.com/vot-tennis-prince.html',
+  // 'https://shopvnb.com/vot-tennis-tecnifibre.html',
 ];
 
 console.log('Start scraping products...');
