@@ -55,7 +55,25 @@ async function getProducts(page, url, retries = 3) {
             'vợt tennis yonex': '67247396614df2a226fedc34',            
             'vợt tennis head': '672473a2614df2a226fedc47',
             'vợt tennis prince': '672473ad614df2a226fedc50',                      
-            'vợt tennis tecnifibre': '672473f16ad384ea783e9c2b',                      
+            'vợt tennis tecnifibre': '672473f16ad384ea783e9c2b',
+            
+            'túi tennis wilson': '6735b7260d718af5b315bdc9',
+            'túi tennis babolat': '6735b73a0d718af5b315bddc',
+            'túi tennis head': '6735b7560d718af5b315bdf8',
+            'túi tennis adidas': '6735b7640d718af5b315be01',
+            'túi tennis tecnifibre': '6735b7720d718af5b315be0a',
+            'túi tennis prince': '6735b77f0d718af5b315be1d',
+
+            'balo tennis wilson': '6735bbf502fb33f22997d383',
+            'balo tennis babolat': '6735bbfc02fb33f22997d38c',
+            'balo tennis prince': '6735bc0802fb33f22997d395',
+            'balo tennis head': '6735bc1102fb33f22997d3a8',
+
+            'bóng tennis': '6735c94802fb33f22997daf3',
+            'quấn cán vợt tennis': '6735c96002fb33f22997db04',
+            'vớ tennis': '6735c98502fb33f22997db15',
+            'nón tennis': '6735c98e02fb33f22997db1c',
+            'giảm rung': '6735c9dd02fb33f22997db41',
           };
           // for (const [key, $oid] of Object.entries(ids)) {
           //   if (name === key) {
@@ -210,10 +228,30 @@ const listUrls = [
 
   // 'https://shopvnb.com/vot-tennis-wilson.html',
   // 'https://shopvnb.com/vot-tennis-babolat.html',
-  'https://shopvnb.com/vot-tennis-yonex.html',
+  // 'https://shopvnb.com/vot-tennis-yonex.html',
   // 'https://shopvnb.com/vot-tennis-head.html',
   // 'https://shopvnb.com/vot-tennis-prince.html',
   // 'https://shopvnb.com/vot-tennis-tecnifibre.html',
+
+  // 'https://shopvnb.com/tui-tennis-wilson.html',
+  // 'https://shopvnb.com/tui-tennis-babolat.html',
+  // 'https://shopvnb.com/tui-tennis-head.html',
+  // 'https://shopvnb.com/tui-tennis-adidas.html',
+  // 'https://shopvnb.com/tui-tennis-tecnifibre.html',
+  // 'https://shopvnb.com/tui-tennis-prince.html',
+
+  // 'https://shopvnb.com/balo-tennis-wilson.html',
+  // 'https://shopvnb.com/balo-tennis-babolat.html',
+  // 'https://shopvnb.com/balo-tennis-prince.html',
+  // 'https://shopvnb.com/balo-tennis-head.html',
+
+  // 'https://shopvnb.com/bong-tennis.html',
+  // 'https://shopvnb.com/quan-can-vot-tennis.html',
+  // 'https://shopvnb.com/giam-rung.html',
+  // 'https://shopvnb.com/vo-tennis.html',
+  // 'https://shopvnb.com/non-tennis.html',
+
+  
 ];
 
 console.log('Start scraping products...');
