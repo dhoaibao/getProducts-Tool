@@ -74,6 +74,26 @@ async function getProducts(page, url, retries = 3) {
             'vớ tennis': '6735c98502fb33f22997db15',
             'nón tennis': '6735c98e02fb33f22997db1c',
             'giảm rung': '6735c9dd02fb33f22997db41',
+
+            'vợt pickleball head': '6735cce902fb33f22997e052',
+            'vợt pickleball joola': '6735ccf602fb33f22997e05b',
+            'vợt pickleball prokennex': '6735cd0402fb33f22997e06e',
+            'vợt pickleball passion': '6735cd1002fb33f22997e077',
+            'vợt pickleball beesoul': '6735cd2302fb33f22997e08a',
+            'vợt pickleball selkirk': '6735cd2e02fb33f22997e093',
+            'vợt pickleball babolat': '6735cd3802fb33f22997e0a5',
+            'vợt pickleball wilson': '6735cd4602fb33f22997e0af',
+            'vợt pickleball wilson': '6735cd4602fb33f22997e0af',
+
+            'túi pickleball joola': '6735cd5d02fb33f22997e0c2',
+            
+            'balo pickleball joola': '6735cd8502fb33f22997e0e7',
+            'balo pickleball arronax': '6735cda602fb33f22997e10c',
+
+            'lưới pickleball': '6735cdb702fb33f22997e11e',
+            'quấn cán vợt pickleball': '6735cdc702fb33f22997e125',
+            'bảo vệ khung vợt pickleball': '6735cdd102fb33f22997e136',
+            'tẩy mặt vợt pickleball': '6735cde302fb33f22997e13d',
           };
           // for (const [key, $oid] of Object.entries(ids)) {
           //   if (name === key) {
@@ -251,7 +271,24 @@ const listUrls = [
   // 'https://shopvnb.com/vo-tennis.html',
   // 'https://shopvnb.com/non-tennis.html',
 
-  
+  // 'https://shopvnb.com/vot-pickleball-head.html',
+  // 'https://shopvnb.com/vot-pickleball-joola.html',
+  // 'https://shopvnb.com/vot-pickleball-prokennex.html',
+  // 'https://shopvnb.com/vot-pickleball-passion.html',
+  // 'https://shopvnb.com/vot-pickleball-beesoul.html',
+  // 'https://shopvnb.com/vot-pickleball-selkirk.html',
+  // 'https://shopvnb.com/vot-pickleball-babolat.html',
+  // 'https://shopvnb.com/vot-pickleball-wilson.html',
+
+  // 'https://shopvnb.com/tui-pickleball-joola.html',
+
+  // 'https://shopvnb.com/balo-pickleball-joola.html',
+  // 'https://shopvnb.com/balo-pickleball-arronax.html',
+
+  // 'https://shopvnb.com/luoi-pickleball.html',
+  // 'https://shopvnb.com/quan-can-vot-pickleball.html'
+  // 'https://shopvnb.com/bao-ve-khung-vot-pickleball.html',
+  // 'https://shopvnb.com/tay-mat-vot.html',
 ];
 
 console.log('Start scraping products...');
