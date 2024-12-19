@@ -1,12 +1,12 @@
 {
   "dependencies": {
     "async": "^3.2.6",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "cli-progress": "^3.12.0",
     "fs": "^0.0.1-security",
     "gitignore": "^0.7.0",
     "p-limit": "^6.1.0",
-    "puppeteer": "^23.8.0"
+    "puppeteer": "^23.11.1"
   },
   "scripts": {
     "start": "clear && bun run ./src/getProducts.js  && bun run ./src/getProductDetail.js && bun run ./src/addProductToDb.js"
